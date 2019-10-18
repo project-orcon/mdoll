@@ -1,58 +1,196 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+  <v-container fluid class="pa-0">
+    <v-row no-gutters>
+      <v-col cols="12" v-show="showVideo">
+        <iframe
+          id="video"
+          src="https://www.youtube.com/embed/lRekYc2ppss?start=115&end=145&rel=0&autoplay=1&mute=1&showinfo=0&iv_load_policy=3&controls=0&enablejsapi=1"
+          frameborder="0"
+          allowfullscreen
+          class="youtubeVideo"
+        ></iframe>
+      </v-col>
+      <v-col cols="12" v-show="!showVideo">
+        <div
+          class="mainVideoImage"
+          :style="{ backgroundImage: 'url(\'' + require('@/assets/gray-end-video.jpg') + '\')' }"
+        >
+          <transition name="slide-fade">
+            <div style="transform: rotate(-10deg);" v-show="!showVideo">
+              Michael Doll
+              <br />Tattoo Artist
+              <br />Prenzlauer Berg
+            </div>
+          </transition>
+        </div>
+      </v-col>
+      <v-col cols="12" class="text-center">
+        <div class="main-heading">About</div>
+        <br />
+        <img src="@/assets/michaelprofile.jpg" class="profile-pic" />
+        <br />
+        <div class="my-4">
+          <strong>Michael aka Dr. Rittersporn</strong>
+          <br />Tattoo Artist, Philospher & Writer
+          <br />
+          <br />
+          <div class="paragraph">
+            Hi I'm Michael, I've been working as a tattoo artist since 2011 in Germany.
+            Currently working out of Prenzlauer Berg, Berlin.
+          </div>
+        </div>
+      </v-col>
+      <v-col cols="12" class="text-center">
+        <div class="main-heading">Contact</div>
+        <br />Email me to discuss what kind of tattoo you want!
+        <br />@
+        <strong style="text-transform:uppercase">therittersporn@gmail.com</strong>
+      </v-col>
+
+      <v-col cols="12">
+        <div class="main-heading">Instagram feed</div>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12">
+        <v-card class="black">
+          <v-container class="black">
+            <v-row>
+              <v-col v-for="item in instagramArray" :key="item" class="d-flex child-flex" cols="4">
+                <v-card flat tile class="d-flex">
+                  <v-img :src="item" aspect-ratio="1" class="grey lighten-2">
+                    <template v-slot:placeholder>
+                      <v-row class="fill-height ma-0" align="center" justify="center">
+                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" class="text-center">
+        <div class="main-heading mb-5">&copy; Michael Doll</div>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
-</script>
+import axios from "axios";
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
+export default {
+  mounted: function() {
+    //originally going to pause video but youtube has annoying related videos bar that can't be
+    //removed so hide the entire video and replace with thumbnail.
+    this.instagramPhotos();
+    setTimeout(() => {
+      this.showVideo = false;
+    }, 26000);
+    setTimeout(() => {
+      this.showText = true;
+    }, 1000);
+  },
+  methods: {
+    instagramPhotos: function() {
+      // It will contain our photos' links
+      this.instagramArray = [];
+
+      axios
+        .get("https://www.instagram.com/theblackworkartist/")
+        .then(userInfoSource => {
+          // userInfoSource.data contains the HTML from Axios
+          const jsonObject = userInfoSource.data
+            .match(
+              /<script type="text\/javascript">window\._sharedData = (.*)<\/script>/
+            )[1]
+            .slice(0, -1);
+
+          const userInfo = JSON.parse(jsonObject);
+          // Retrieve only the first 10 instagramArrayults
+          const mediaArray = userInfo.entry_data.ProfilePage[0].graphql.user.edge_owner_to_timeline_media.edges.splice(
+            1,
+            11
+          );
+          for (let media of mediaArray) {
+            const node = media.node;
+
+            // Process only if is an image
+            if (node.__typename && node.__typename !== "GraphImage") {
+              continue;
+            }
+
+            // Push the thumbnail src in the array
+            this.instagramArray.push(node.thumbnail_src);
+          }
+        })
+        .catch(e => {
+          console.error("Unable to retrieve photos. Reason: " + e.toString());
+        });
+    }
+  },
+  data: () => ({
+    instagramArray: [],
+    showVideo: true,
+    showText: false
+  })
+};
+</script>
+<style>
+.paragraph {
+  max-width: 500px;
+  margin: 0 auto;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+.youtubeVideo {
+  width: 100vw;
+  height: 100vh;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+.mainVideoImage {
+  margin-top: 5px;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 90vh;
+  font-size: 70px;
+
+  color: black;
+  font-family: "Homemade Apple", cursive;
+
+  display: flex;
+  align-items: end; /* horizontal */
+  justify-content: end; /* vertical */
 }
-a {
-  color: #42b983;
+
+.main-heading {
+  font-size: 30px;
+  color: white;
+  font-family: "Homemade Apple", cursive;
+  transform: rotate(-2deg);
+  text-align: center;
+  margin-top: 120px;
+}
+
+.profile-pic {
+  border-radius: 50%;
+  width: 200px;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.8s ease;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter,
+.slide-fade-leave-active {
+  padding-left: 10px;
+  opacity: 0;
 }
 </style>
