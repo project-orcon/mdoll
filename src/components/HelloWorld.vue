@@ -87,13 +87,33 @@ export default {
   mounted: function() {
     //originally going to pause video but youtube has annoying related videos bar that can't be
     //removed so hide the entire video and replace with thumbnail.
+
     this.instagramPhotos();
-    setTimeout(() => {
-      this.showVideo = false;
-    }, 26000);
-    setTimeout(() => {
-      this.showText = true;
-    }, 1000);
+
+    var tag = document.createElement("script");
+    tag.id = "iframe-demo";
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    window.onYouTubeIframeAPIReady = () => {
+      this.yt = new window.YT.Player("video", {
+        events: {
+          onReady: window.onPlayerReady
+        }
+      });
+    };
+    window.onPlayerReady = () => {
+      document.getElementById("video").style.borderColor = "#FF6D00";
+      setInterval(() => {
+        console.log(this.yt.getCurrentTime());
+
+        //hide the video when get to 140 sec and replace with image screenshot
+        if (this.yt.getCurrentTime() >= 140) {
+          this.showVideo = false;
+        }
+      }, 1000);
+    };
   },
   methods: {
     instagramPhotos: function() {
@@ -134,6 +154,7 @@ export default {
     }
   },
   data: () => ({
+    yt: {},
     instagramArray: [],
     showVideo: true,
     showText: false
