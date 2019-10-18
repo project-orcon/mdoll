@@ -10,13 +10,13 @@
           class="youtubeVideo"
         ></iframe>
       </v-col>
-      <v-col cols="12" v-show="!showVideo">
+      <v-col cols="12" v-show="!showVideo" class="outerVideoImage">
         <div
           class="mainVideoImage"
-          :style="{ backgroundImage: 'url(\'' + require('@/assets/gray-end-video.jpg') + '\')' }"
+          :style="{ backgroundImage: 'url(\'' + require('@/assets/darker-pic.jpeg') + '\')' }"
         >
           <transition name="slide-fade">
-            <div style="transform: rotate(-10deg);" v-show="!showVideo">
+            <div style="transform: rotate(-10deg);" v-show="!showVideo" class="innerText">
               Michael Doll
               <br />Tattoo Artist
               <br />Prenzlauer Berg
@@ -42,13 +42,14 @@
       </v-col>
       <v-col cols="12" class="text-center">
         <div class="main-heading">Contact</div>
-        <br />Email me to discuss what kind of tattoo you want!
-        <br />@
+        <br />Email me to discuss your next tattoo!
+        <br />
         <strong style="text-transform:uppercase">therittersporn@gmail.com</strong>
       </v-col>
 
-      <v-col cols="12">
+      <v-col cols="12 text-center">
         <div class="main-heading">Instagram feed</div>
+        <br><a class="white--text" href="https://www.instagram.com/theblackworkartist/" style="text-decoration:none"> @theblackworkartist</a>
       </v-col>
     </v-row>
     <v-row>
@@ -77,6 +78,8 @@
         <div class="main-heading mb-5">&copy; Michael Doll</div>
       </v-col>
     </v-row>
+
+
   </v-container>
 </template>
 
@@ -88,6 +91,11 @@ export default {
     //originally going to pause video but youtube has annoying related videos bar that can't be
     //removed so hide the entire video and replace with thumbnail.
 
+    //dont show video if mobile view
+
+    if(!this.$vuetify.breakpoint.smAndUp){
+      this.showVideo=false;
+    }
     this.instagramPhotos();
 
     var tag = document.createElement("script");
@@ -105,12 +113,11 @@ export default {
     };
     window.onPlayerReady = () => {
       document.getElementById("video").style.borderColor = "#FF6D00";
-      setInterval(() => {
-        console.log(this.yt.getCurrentTime());
-
+      var interval=setInterval(() => {
         //hide the video when get to 140 sec and replace with image screenshot
-        if (this.yt.getCurrentTime() >= 140) {
+        if (this.yt.getCurrentTime() >= 139) {
           this.showVideo = false;
+          clearInterval(interval);
         }
       }, 1000);
     };
@@ -162,6 +169,9 @@ export default {
 };
 </script>
 <style>
+
+
+
 .paragraph {
   max-width: 500px;
   margin: 0 auto;
@@ -179,12 +189,16 @@ export default {
   height: 90vh;
   font-size: 70px;
 
-  color: black;
+  color: #cccccc;
   font-family: "Homemade Apple", cursive;
 
   display: flex;
   align-items: end; /* horizontal */
   justify-content: end; /* vertical */
+}
+
+.outerVideoImage{
+
 }
 
 .main-heading {
@@ -214,4 +228,74 @@ export default {
   padding-left: 10px;
   opacity: 0;
 }
+
+@media (max-width: 540px) { 
+.outerVideoImage {
+  position:relative;
+   height:100vh;
+}
+.youtubeVideo {
+  width: 100vw;
+  height: 45vh;
+  margin-top:50vh;
+}
+
+.mainVideoImage {
+
+   position: absolute;
+    bottom: 0;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 30vh;
+  font-size: 40px;
+
+  color: white;
+  font-family: "Homemade Apple", cursive;
+
+  display: flex;
+  align-items: end; /* horizontal */
+  justify-content: end; /* vertical */
+}
+
+
+.mainVideoImage .innerText {
+  margin-top:-30%;
+  margin-left:10%;
+}
+
+.paragraph {
+  max-width: 400px;
+  padding:10px;
+  margin: 0 auto;
+}
+
+}
+
+
+@media (min-width:541px) and (max-width: 800px) { 
+.youtubeVideo {
+  width: 100vw;
+  height: 42vh;
+}
+.mainVideoImage {
+  margin-top: 5px;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 42vh;
+  font-size: 50px;
+
+  color:white;
+  font-family: "Homemade Apple", cursive;
+
+  display: flex;
+  align-items: end; /* horizontal */
+  justify-content: end; /* vertical */
+}
+
+}
+
 </style>

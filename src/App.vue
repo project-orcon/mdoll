@@ -8,8 +8,6 @@
       <v-spacer></v-spacer>
       <v-btn
         text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
       >
         <span class="mr-2" v-show="$vuetify.breakpoint.mdAndUp">TATTOO ARTIST | PRENZLAUER BERG</span>
       </v-btn>
