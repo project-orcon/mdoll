@@ -49,7 +49,12 @@
 
       <v-col cols="12 text-center">
         <div class="main-heading">Instagram feed</div>
-        <br><a class="white--text" href="https://www.instagram.com/theblackworkartist/" style="text-decoration:none"> @theblackworkartist</a>
+        <br />
+        <a
+          class="white--text"
+          href="https://www.instagram.com/theblackworkartist/"
+          style="text-decoration:none"
+        >@theblackworkartist</a>
       </v-col>
     </v-row>
     <v-row>
@@ -78,8 +83,6 @@
         <div class="main-heading mb-5">&copy; Michael Doll</div>
       </v-col>
     </v-row>
-
-
   </v-container>
 </template>
 
@@ -93,8 +96,8 @@ export default {
 
     //dont show video if mobile view
 
-    if(!this.$vuetify.breakpoint.smAndUp){
-      this.showVideo=false;
+    if (!this.$vuetify.breakpoint.smAndUp) {
+      this.showVideo = false;
     }
     this.instagramPhotos();
 
@@ -113,7 +116,7 @@ export default {
     };
     window.onPlayerReady = () => {
       document.getElementById("video").style.borderColor = "#FF6D00";
-      var interval=setInterval(() => {
+      var interval = setInterval(() => {
         //hide the video when get to 140 sec and replace with image screenshot
         if (this.yt.getCurrentTime() >= 139) {
           this.showVideo = false;
@@ -155,8 +158,8 @@ export default {
             this.instagramArray.push(node.thumbnail_src);
           }
         })
-        .catch(e => {
-          console.error("Unable to retrieve photos. Reason: " + e.toString());
+        .catch(() => {
+          // console.error("Unable to retrieve photos. Reason: " + e.toString());
         });
     }
   },
@@ -169,9 +172,6 @@ export default {
 };
 </script>
 <style>
-
-
-
 .paragraph {
   max-width: 500px;
   margin: 0 auto;
@@ -197,8 +197,7 @@ export default {
   justify-content: end; /* vertical */
 }
 
-.outerVideoImage{
-
+.outerVideoImage {
 }
 
 .main-heading {
@@ -229,73 +228,67 @@ export default {
   opacity: 0;
 }
 
-@media (max-width: 540px) { 
-.outerVideoImage {
-  position:relative;
-   height:100vh;
-}
-.youtubeVideo {
-  width: 100vw;
-  height: 45vh;
-  margin-top:50vh;
-}
+@media (max-width: 540px) {
+  .outerVideoImage {
+    position: relative;
+    height: 100vh;
+  }
+  .youtubeVideo {
+    width: 100vw;
+    height: 45vh;
+    margin-top: 50vh;
+  }
 
-.mainVideoImage {
-
-   position: absolute;
+  .mainVideoImage {
+    position: absolute;
     bottom: 0;
-  background-position: top;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 100vw;
-  height: 30vh;
-  font-size: 40px;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    height: 30vh;
+    font-size: 40px;
 
-  color: white;
-  font-family: "Homemade Apple", cursive;
+    color: white;
+    font-family: "Homemade Apple", cursive;
 
-  display: flex;
-  align-items: end; /* horizontal */
-  justify-content: end; /* vertical */
+    display: flex;
+    align-items: end; /* horizontal */
+    justify-content: end; /* vertical */
+  }
+
+  .mainVideoImage .innerText {
+    margin-top: -40%;
+    margin-left: 10%;
+  }
+
+  .paragraph {
+    max-width: 400px;
+    padding: 10px;
+    margin: 0 auto;
+  }
 }
 
+@media (min-width: 541px) and (max-width: 800px) {
+  .youtubeVideo {
+    width: 100vw;
+    height: 42vh;
+  }
+  .mainVideoImage {
+    margin-top: 5px;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    height: 42vh;
+    font-size: 50px;
 
-.mainVideoImage .innerText {
-  margin-top:-30%;
-  margin-left:10%;
+    color: white;
+    font-family: "Homemade Apple", cursive;
+
+    display: flex;
+    align-items: end; /* horizontal */
+    justify-content: end; /* vertical */
+  }
 }
-
-.paragraph {
-  max-width: 400px;
-  padding:10px;
-  margin: 0 auto;
-}
-
-}
-
-
-@media (min-width:541px) and (max-width: 800px) { 
-.youtubeVideo {
-  width: 100vw;
-  height: 42vh;
-}
-.mainVideoImage {
-  margin-top: 5px;
-  background-position: top;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 100vw;
-  height: 42vh;
-  font-size: 50px;
-
-  color:white;
-  font-family: "Homemade Apple", cursive;
-
-  display: flex;
-  align-items: end; /* horizontal */
-  justify-content: end; /* vertical */
-}
-
-}
-
 </style>
