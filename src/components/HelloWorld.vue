@@ -90,7 +90,11 @@
           class="white--text"
           style="text-decoration:none"
         >
-          <img src="@/assets/redbubble.png" width="100px" style="background-color:white; border-radius:50%;padding:10px" />
+          <img
+            src="@/assets/redbubble.png"
+            width="100px"
+            style="background-color:white; border-radius:50%;padding:10px"
+          />
           <br />
           <br />Online Store @ redbubble.com
         </a>
@@ -249,10 +253,10 @@ body {
 }
 
 .outline-text {
-  -webkit-text-stroke: 1px #69f0ae;
-  color: black;
-  text-shadow: 3px 3px 0 #69f0ae, -1px -1px 0 #69f0ae, 1px -1px 0 #69f0ae,
-    -1px 1px 0 #69f0ae, 1px 1px 0 #69f0ae;
+  -webkit-text-stroke: 1px black;
+  color: #69f0ae;
+  text-shadow: 3px 3px 0 black, -1px -1px 0 black, 1px -1px 0 black,
+    -1px 1px 0 black, 1px 1px 0 black;
 }
 
 @media (max-width: 540px) {
@@ -269,12 +273,12 @@ body {
     font-family: "Homemade Apple", cursive;
     display: flex;
   }
-.outline-text {
-   -webkit-text-stroke: 1px black;
-  color: white;
-  text-shadow: 3px 3px 0 black, -1px -1px 0 black, 1px -1px 0 black,
-    -1px 1px 0 black, 1px 1px 0 black;
-}
+  .outline-text {
+    -webkit-text-stroke: 1px black;
+    color: white;
+    text-shadow: 3px 3px 0 black, -1px -1px 0 black, 1px -1px 0 black,
+      -1px 1px 0 black, 1px 1px 0 black;
+  }
   .paragraph {
     max-width: 400px;
     padding: 10px;
@@ -296,7 +300,4 @@ body {
     opacity: 0;
   }
 }
-
-
-
 </style>
