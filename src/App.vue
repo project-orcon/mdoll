@@ -2,8 +2,8 @@
   <v-app>
     <v-app-bar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span class="font-weight-light">Michael</span>
-        <span>Doll</span>
+        <span class="font-weight-light darken-1">Dr</span>
+        <span style="color:#000f26">Rittersporn</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn

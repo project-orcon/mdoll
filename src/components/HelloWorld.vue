@@ -10,14 +10,18 @@
           class="youtubeVideo"
         ></iframe>
       </v-col>
-      <v-col cols="12" v-show="!showVideo" class="outerVideoImage">
+      <v-col cols="12" v-show="!showVideo">
         <div
           class="mainVideoImage"
           :style="{ backgroundImage: 'url(\'' + require('@/assets/darker-pic.jpeg') + '\')' }"
         >
           <transition name="slide-fade">
-            <div style="transform: rotate(-10deg);" v-show="!showVideo" class="innerText">
-              Michael Doll
+            <div
+              style="transform: rotate(-10deg);"
+              v-show="!showVideo"
+              class="innerText outline-text"
+            >
+              Dr Rittersporn
               <br />Tattoo Artist
               <br />Prenzlauer Berg
             </div>
@@ -59,7 +63,7 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-card class="black">
+        <v-card class="black" href="https://www.instagram.com/theblackworkartist/">
           <v-container class="black">
             <v-row>
               <v-col v-for="item in instagramArray" :key="item" class="d-flex child-flex" cols="4">
@@ -79,8 +83,22 @@
       </v-col>
     </v-row>
     <v-row>
+      <v-col cols="12" class="text-center mt-5">
+        <div class="main-heading mb-5">Online Store</div>
+        <a
+          href="https://www.redbubble.com/people/blackworkartist"
+          class="white--text"
+          style="text-decoration:none"
+        >
+          <img src="@/assets/redbubble.png" width="100px" style="background-color:white; border-radius:50%;padding:10px" />
+          <br />
+          <br />Online Store @ redbubble.com
+        </a>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col cols="12" class="text-center">
-        <div class="main-heading mb-5">&copy; Michael Doll</div>
+        <div class="main-heading mb-5">&copy; Dr Rittersporn</div>
       </v-col>
     </v-row>
   </v-container>
@@ -165,6 +183,7 @@ export default {
   },
   data: () => ({
     yt: {},
+    redbubbleArray: [],
     instagramArray: [],
     showVideo: true,
     showText: false
@@ -172,32 +191,32 @@ export default {
 };
 </script>
 <style>
+html,
+body {
+  overflow-x: hidden;
+}
+
 .paragraph {
   max-width: 500px;
   margin: 0 auto;
+  padding: 0 10px;
 }
 .youtubeVideo {
   width: 100vw;
-  height: 100vh;
+  height: 56.25vw;
 }
 .mainVideoImage {
   margin-top: 5px;
+  padding-left: 80px;
+  padding-top: 60px;
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
   width: 100vw;
-  height: 90vh;
+  height: 56.25vw;
   font-size: 70px;
-
-  color: #cccccc;
   font-family: "Homemade Apple", cursive;
-
   display: flex;
-  align-items: end; /* horizontal */
-  justify-content: end; /* vertical */
-}
-
-.outerVideoImage {
 }
 
 .main-heading {
@@ -225,70 +244,59 @@ export default {
 .slide-fade-enter,
 .slide-fade-leave-active {
   padding-left: 10px;
+  padding-top: 60px;
   opacity: 0;
 }
 
-@media (max-width: 540px) {
-  .outerVideoImage {
-    position: relative;
-    height: 100vh;
-  }
-  .youtubeVideo {
-    width: 100vw;
-    height: 45vh;
-    margin-top: 50vh;
-  }
-
-  .mainVideoImage {
-    position: absolute;
-    bottom: 0;
-    background-position: top;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100vw;
-    height: 30vh;
-    font-size: 40px;
-
-    color: white;
-    font-family: "Homemade Apple", cursive;
-
-    display: flex;
-    align-items: end; /* horizontal */
-    justify-content: end; /* vertical */
-  }
-
-  .mainVideoImage .innerText {
-    margin-top: -40%;
-    margin-left: 10%;
-  }
-
-  .paragraph {
-    max-width: 400px;
-    padding: 10px;
-    margin: 0 auto;
-  }
+.outline-text {
+  -webkit-text-stroke: 1px #69f0ae;
+  color: black;
+  text-shadow: 3px 3px 0 #69f0ae, -1px -1px 0 #69f0ae, 1px -1px 0 #69f0ae,
+    -1px 1px 0 #69f0ae, 1px 1px 0 #69f0ae;
 }
 
-@media (min-width: 541px) and (max-width: 800px) {
-  .youtubeVideo {
-    width: 100vw;
-    height: 42vh;
-  }
+@media (max-width: 540px) {
   .mainVideoImage {
+    padding-left: 40px;
+    padding-top: 60px;
     margin-top: 5px;
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
     width: 100vw;
-    height: 42vh;
-    font-size: 50px;
-
-    color: white;
+    height: 140vw;
+    font-size: 40px;
     font-family: "Homemade Apple", cursive;
-
     display: flex;
-    align-items: end; /* horizontal */
-    justify-content: end; /* vertical */
+  }
+.outline-text {
+   -webkit-text-stroke: 1px black;
+  color: white;
+  text-shadow: 3px 3px 0 black, -1px -1px 0 black, 1px -1px 0 black,
+    -1px 1px 0 black, 1px 1px 0 black;
+}
+  .paragraph {
+    max-width: 400px;
+    padding: 10px;
+    margin: 0 auto;
+  }
+
+  .slide-fade-enter-active {
+    transition: all 0.8s ease;
+  }
+
+  .slide-fade-leave-active {
+    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+  }
+
+  .slide-fade-enter,
+  .slide-fade-leave-active {
+    padding-left: 10px;
+    padding-top: 60px;
+    opacity: 0;
   }
 }
+
+
+
 </style>
